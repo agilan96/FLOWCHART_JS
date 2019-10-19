@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=utf-8 />
+    <title>Students Academic Report</title>
+    <style>
+
+    h1{
+    text-align: center;
+        }
+
+    h2{
+    text-align: center;
+        }
+    
+    #Result1{
+        margin-top:-25%; 
+        margin-left:60%;
+        }
+        th{
+            border: 1px solid black;
+        }
+
+
+        
+    
+    </style> 
+</head>
+<body>
+        <h1>Bright Angels School</h1>
+        <h2>Student Academic Report Form</h2>
+    StudentID<br><input type="text" id="ID"></input><br>
+    Grade<br>
+    <select name="grade" id="grades">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+    </select><br>
+    Division<br>
+    <select name="division" id="div">
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+    </select><br>
+   
+    English Marks<br><input type="number" id="english"></input><br>
+    Maths Marks<br><input type="number" id="maths"></input><br>
+    Science Marks<br><input type="number" id="science"></input><br>
+    Social Science Marks<br><input type="number" id="social"></input><br>
+        <br><input type="button" id="button1" value="Submit" onclick="add_element_to_array();"></input><br>
+    <br><input type="button" id="button2" value="Display" onclick="display_array();"></input>
+    
+    <div id="Result"></div>
+</body>
+
+
+<script>
+    var x = 0;
+    var noofsub = 4;
+    var stuid = new Array();
+    var grad = new Array();
+    var div = new Array();
+    var eng = new Array();
+    var math = new Array();
+    var scien = new Array();
+    var social = new Array();
+    var sum1 = new Array();
+    var avg1 = new Array();
+    var pass = ["0","0","0","0","0","0","0","0","0","0","0","0","0","0"];
+    var fail = ["0","0","0","0","0","0","0","0","0","0","0","0","0","0"];
+    var noofstu = ["0","0","0","0","0","0","0","0","0","0","0","0","0"];
+    var sum = ["0","0","0","0","0","0","0","0","0","0","0","0","0"];
+    var avg = ["0","0","0","0","0","0","0","0","0","0","0","0","0"];
+
+function add_element_to_array()
+{
+ 
+ stuid[x] = parseInt(document.getElementById("ID").value,10);
+ grad[x] = parseInt(document.getElementById("grades").value,10);
+ div[x] = parseInt(document.getElementById("div").value,10);
+ eng[x] = parseInt(document.getElementById("english").value,10);
+ math[x] = parseInt(document.getElementById("maths").value,10);
+ scien[x] = parseInt(document.getElementById("science").value,10);
+ social[x] = parseInt(document.getElementById("social").value,10);
+ vaildate();
+ 
+}
+
+function vaildate()
+{
+    if((grad[x]=="")||(div[x]==""))
+    {
+        alert("Grade or Division has to be entered ");
+    }
+    else if((eng[x]<0)||(math[x]<0)||(scien[x]<0)||(social[x]<0))
+    {
+     alert("Marks can't be negative");
+     valcleartext();
+   
+    }
+    else
+    {
+        calculate();
+        
+    }
+
+}
+
+function cleartext()
+{
+ document.getElementById("ID").value = "";
+ document.getElementById("grades").value = "";
+ document.getElementById("div").value = "";
+ document.getElementById("english").value = "";
+ document.getElementById("maths").value = "";
+ document.getElementById("science").value = "";
+ document.getElementById("social").value = "";
+}
+function valcleartext()
+{
+ document.getElementById("english").value = "";
+ document.getElementById("maths").value = "";
+ document.getElementById("science").value = "";
+ document.getElementById("social").value = "";
+}
+function calculate()
+{
+ alert("Marks Entered");
+    sum1[x]=eng[x]+math[x]+scien[x]+social[x];
+    avg1[x]=sum1[x]/noofsub;
+    if(avg1[x]>=60)
+    {
+        pass[grad[x]]++;
+        noofstu[grad[x]]++;
+        sum[grad[x]]+=avg1[x];
+        
+    }
+    else if(avg1[x]<60)
+    {
+        fail[grad[x]]++;
+        noofstu[grad[x]]++;
+        sum[grad[x]]+=avg1[x];
+    }
+    x++;
+    cleartext();
+}
+
+ 
+function display_array()
+{
+    var e="<hr/>"; var h ='&nbsp'; var l='&nbsp'; var pp;
+    for(var s=1;s<=20;s++)
+    {
+        h+="&nbsp";
+    }
+    var k="Grade No.Of Students Pass Students Fail Students Pass Percentage <br> ";
+    
+    for(var i=1;i<=9;i++)
+    {
+        if(noofstu[i]!=0)
+       { 
+        avg[i]=sum[i]/noofstu[i];
+        pp=((pass[i]/noofstu[i])*100)
+        e += l+l + i +h+ noofstu[i] +h+ pass[i] +h+ fail[i] +h+ pp.toFixed(2) +"<br/>";
+       }
+       else
+       {
+        e += l+l + i +h+ noofstu[i] +h+ pass[i] +h+ fail[i] +h+ "0.00" +"<br/>";
+       }
+    }
+    for(var i=10;i<=12;i++)
+    {
+        if(noofstu[i]!=0)
+        {
+            avg[i]=sum[i]/noofstu[i];
+            pp=((pass[i]/noofstu[i])*100)
+            e +=  i +h+ noofstu[i] +h+ pass[i] +h+ fail[i] +h+ pp.toFixed(2) +"<br/>";
+        }
+        else
+        {
+            e +=  i +h+ noofstu[i] +h+ pass[i] +h+ fail[i] +h+ "0.00" +"<br/>";
+        }
+    }
+
+    document.getElementById("Result").innerHTML=k+e;
+   
+   
+  
+}
+
+</script>
+
+</html>
